@@ -1,0 +1,26 @@
+name: Terraform
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'infra/terraform/**'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init/Plan
+        working-directory: infra/terraform
+        run: |
+          terraform init
+          terraform plan -var="aws_region=us-east-1"
+      # Para aplicar automaticamente, descomente:
+      # - name: Terraform Apply
+      #   working-directory: infra/terraform
+      #   run: terraform apply -auto-approve -var="aws_region=us-east-1"

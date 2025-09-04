@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: Farmácia Vida+ API
+  version: 1.0.0
+paths:
+  /products:
+    get:
+      summary: Lista produtos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /products/{id}:
+    get:
+      summary: Obtém um produto por ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not found
+  /orders:
+    post:
+      summary: Cria um pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+    CreateOrderRequest:
+      type: object
+      required: [productId, qty, customer]
+      properties:
+        productId:
+          type: string
+        qty:
+          type: integer
+        customer:
+          type: string
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        qty:
+          type: integer
+        customer:
+          type: string
+        status:
+          type: string

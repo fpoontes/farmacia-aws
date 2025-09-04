@@ -1,0 +1,17 @@
+# Terraform
+*.tfstate*
+.terraform/
+crash.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node / Front
+node_modules/
+dist/
+
+# Mac / Windows / Misc
+.DS_Store
+Thumbs.db
